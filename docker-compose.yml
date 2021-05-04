@@ -1,0 +1,19 @@
+#To run the compose file use this command on the terminal:
+    #docker-compose build
+
+#configuration of all services used
+version: "3"
+
+#service called app and the build set to .
+services:
+    app:
+      build:
+        context: .
+      ports:
+        - "8000:8000"
+      volumes:
+        - ./app:/app
+      command: >
+        sh -c "python manage.py wait_for_db &&
+               python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
