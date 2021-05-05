@@ -6,8 +6,18 @@ MAINTAINER Salvador Fuentes
 ENV PYTHONUNBUFFERED 1
 #Puts the requirements from the requirements txt json
 COPY ./requirements.txt /requirements.txt
+#install the package for the database
+RUN apk add --update --no-cache postgresql-client jpeg-dev
+#temporary requirements
+RUN apk add --update --no-cache --virtual .tmp-build-deps \
+      gcc libc-dev linux-headers postgresql-dev musl-dev zlib zlib-dev
+
 #Install those requirements
 RUN pip install -r /requirements.txt
+
+#unistall the temporary dependencies 
+RUN apk del .tmp-build-deps
+
 
 #make a directory and switch to it
 RUN mkdir /app
