@@ -4,7 +4,6 @@
 #configuration of all services used
 version: "3"
 
-#service called app and the build set to .
 services:
   app:
     build:
