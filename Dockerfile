@@ -25,10 +25,19 @@ WORKDIR /app
 #copy  the folder form the  local machine to the docker image
 COPY ./app /app
 
+RUN mkdir -p /vol/web/media
+RUN mkdir -p /vol/web/static
 RUN adduser -D user
 #User for running applications
 #Switches docker to the user that was create it
 #this is used for security to avoid access to root image on the local machine
+
+#This instruction is to make the user the owner of the created vol folder and its sub folders
+RUN chown -R user:user /vol/
+
+#The user can do everythingh  with the directoru and rest can read
+RUN chmod -R 755 /vol/web
+
 USER user
 
 #TO use it go to the terminal and the  api folder and run comand:  docker build .
